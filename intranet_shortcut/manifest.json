@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "intranet_shortcut",
+  "description": "shortcuts",
+  "version": "1.4",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+{
+"matches": ["http://intranet.copy112.or.kr/*","http://fileis.com/*"],
+    "js": ["shortcuts.js", "popup.js", "jquery-3.4.1.min.js"]
+  }
+],
+
+  "permissions": [
+    "tabs",
+    "<all_urls>"
+  ]
+}
