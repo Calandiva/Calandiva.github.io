@@ -43,11 +43,13 @@
 					  
 				
 				function gogo() {
-				jbRandom = Math.random();
+				jbRandom = Math.random()+1;
 					
-				jbRandom1 = menu[1]
+				me = jbRandom * menu.length;
+					
 
-				document.getElementsByTagName("h1")[0].innerHTML = jbRandom1
+
+				document.getElementsByTagName("h1")[0].innerHTML = me
 				};
 		
 		
