@@ -19,7 +19,7 @@
 			</header>
 		
 		
-			<button type="button" class="btn btn-primary">고르기</button>
+			<button type="button" class="btn btn-primary" onclick="gogo();">고르기</button>
 
 
 				
@@ -36,7 +36,14 @@
 
 		<!-- Scripts -->
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/go_menu.js"></script>
+			<script>
+				
+				function gogo() {
+				document.write( '<p>' + jbRandom + '</p>' );
+				};
+		
+		
+			</script>
 
 	</body>
 </html>
