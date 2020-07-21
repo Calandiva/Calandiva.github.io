@@ -45,7 +45,7 @@
 				function gogo() {
 				jbRandom = Math.random();
 				
-				me = jbRandom * menu.length+1;
+				me = Math.floor(jbRandom * menu.length+1)
 					
 				document.getElementsByTagName("h1")[0].innerHTML = me
 				};
