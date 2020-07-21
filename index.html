@@ -43,6 +43,7 @@
 					  
 				
 				function gogo() {
+					
 				jbRandom = Math.random();
 				
 				me = Math.floor(jbRandom * (menu.length));
@@ -50,7 +51,14 @@
 				mea = menu[me];
 					
 				document.getElementsByTagName("h1")[0].innerHTML = mea
+					
+				var cco = document.getElementsByTagName("button")[0];
+				
+				cco.style.display = "block";
+					
 				};
+				
+				
 		
 		
 			</script>
