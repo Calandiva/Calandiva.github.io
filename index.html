@@ -39,8 +39,9 @@
 			<script>
 				
 				function gogo() {
+				var st = document.getElementsByTagName('h2')[0].innerHTML
 				jbRandom = Math.random();
-				document.write( '<p>' + jbRandom + '</p>' );
+				document.getElementsByTagName("h2")[0].innerHTML = jbRandom
 				};
 		
 		
