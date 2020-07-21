@@ -749,7 +749,10 @@ button,
   input[type="submit"]:hover,
   input[type="reset"]:hover,
   input[type="button"]:hover,
-  button:hover,
+
+  width: 250px,
+
+  button:hover
   .button:hover {
     background-color: #1fcaa7; }
   input[type="submit"]:active,
