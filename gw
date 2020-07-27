@@ -48,7 +48,7 @@ id = driver.find_element_by_name("id")
 id.send_keys("hije")
 
 pw = driver.find_element_by_id("userPw")
-pw.send_keys("1q2w3e4r!")
+pw.send_keys(비번)
 
 driver.find_element_by_class_name("log_btn").click()
 
