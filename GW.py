@@ -11,12 +11,16 @@ import numpy as np
 from PIL import Image
 import shutil, sys, os
 
+#현재 시간 불러오기
 now = time.localtime()
 s = "%04d_%02d_%02d_%02d_%02d_%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
 
+#워크북 생성
 wb = Workbook()
+#워크시트 생성
 ws1 = wb.active
 
+#워크시트 입력
 ws1['A%s' % 1] = "순번"
 ws1['B%s' % 1] = "이름"
 ws1['C%s' % 1] = "제목"
@@ -30,45 +34,53 @@ ws1['J%s' % 1] = "파일명"
 ws1['K%s' % 1] = "OCR"
 ws1['L%s' % 1] = "주소"
 
+#파일명 생성
 file_name = 'ummubogo' + s + '.xlsx'
 
+#셀이 참조할 숫자
 numb = 2
 
-#브라우저 실행
+#브라우저 실행 - 웹드라이버 경로 설정 필요
 driver = webdriver.Chrome("C:/Users\Chromedriver.exe")
+
+#주소이동 - 그룹웨어(로그인 목적)
 driver.get("https://gw.kcopa.or.kr/gw")
 
-
+#경고창 확인
 try:
     # 얼러트 종료
     time.sleep(1)
     alert = driver.switch_to.alert
     alert.accept()
-
 except:
     pass
 
-
+#아이디 입력
 id = driver.find_element_by_name("id")
-id.send_keys("계정")
+id.send_keys("아이디")
 
+#패스워드 입력
 pw = driver.find_element_by_id("userPw")
 pw.send_keys("패스워드")
 
+#로그인 버튼 클릭
 driver.find_element_by_class_name("log_btn").click()
 
+#우측 상단 이름 클릭
 driver.find_element_by_class_name("divi_txt").click()
 
+#5초 대기
 delay = 5
 driver.implicitly_wait(delay)
 
-
+#창 번호 찾기
 handles = driver.window_handles
-print(driver.window_handles)
+#0번 창(메인윈도우) 이름 설정
 b_window = driver.window_handles[0]
 
-
-jetek_info = {'김동수':['야간','월화수목일'],
+#재택근로자 이름 및 근무조, 근무요일
+jetek_info = {
+'김동수':['야간','월화수목일'],
 '김지원':['심야','월화수목일'],
 '남미연':['주간','월화수금토'],
 '송영민':['야간','월화목금토'],
@@ -78,20 +90,20 @@ jetek_info = {'김동수':['야간','월화수목일'],
 '노영은':['주간','월화수목일'],
 '정민도':['심야','월화목금일'],
 '김재필':['주간','월화수목일'],
-'박순옥':['야간','화수목금토'],
+'박순옥':['야간','화수목금토​'],
 '어혜란':['야간','월화수목일'],
 '권미정':['주간','월화수목일'],
-'김영선':['주간','화수목금토'],
+'김영선':['주간','화수목금토​'],
 '김종선':['주간','월화목금일'],
 '남유정':['야간','월화수금일'],
 '박금배':['야간','월화수목토'],
 '정성월':['야간','월화목금일'],
-'김기정':['심야','화수목금토'],
+'김기정':['심야','화수목금토​'],
 '김수경':['야간','월화수목일'],
-'김가람':['주간','화수목금토'],
+'김가람':['주간','화수목금토​'],
 '김옥현':['심야','월화수목토'],
-'김진영':['주간','화수목금토'],
-'노경화':['주간','화수목금토'],
+'김진영':['주간','화수목금토​'],
+'노경화':['주간','화수목금토​'],
 '박민영':['주간','월화수금토'],
 '하오잉잉':['야간','월화수목일'],
 '이상훈':['심야','월화수목일'],
@@ -100,25 +112,24 @@ jetek_info = {'김동수':['야간','월화수목일'],
 '임선정':['야간','월화수금일']
 }
 
-
-
+#테서렉트 경로 설정
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
 
 def go_bogo():
-
-
+    #메인윈도우로 이동
     driver.switch_to.window(b_window)
 
     time.sleep(2)
 
+    #업무보고탭 이동
     driver.get("http://gw.kcopa.or.kr/schedule/Views/Common/report/reportCheckList?menu_no=304020000")
 
-
+    #상세검색 버튼 클릭
     driver.find_element_by_id("all_menu_btn").click()
     time.sleep(2)
 
-    # 시작달력
+    # 시작달력버튼 클릭
     driver.find_element_by_xpath("""/html/body/div[1]/div[3]/dl/dd[1]/div/div/div[1]/input[2]""").click()
     time.sleep(2)
 
@@ -139,7 +150,6 @@ def go_bogo():
     #일클릭(3번줄3번째-14일)
     driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[4]/td[3]/a""").click()
     time.sleep(2)
-
 
     # 일클릭
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[4]""").click()
@@ -165,7 +175,7 @@ def go_bogo():
     #driver.find_element_by_class_name("botBtn").click()
     #time.sleep(2)
 
-    # 검색
+    # 검색버튼 클릭
     driver.find_element_by_class_name("submit").click()
 
     time.sleep(2)
