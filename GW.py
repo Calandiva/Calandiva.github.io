@@ -313,6 +313,9 @@ def count_pic():
 
     print(cu)
 
+
+
+
     #제목 추출
     title = driver.find_element_by_xpath("""/html/body/div[2]/div[3]/div[3]/table/tbody/tr[2]/td""").text
     #날짜 추출
@@ -464,6 +467,39 @@ def count_pic():
         ea_time = ''
     else:
         print(ea_time, l_ea_time,'이거')
+        pass
+
+    cmts = driver.find_elements_by_name("commentDiv")
+    l_cmts = len(cmts) - 1
+    print('댓글 개수:', l_cmts)
+
+    if l_cmts == 0:
+        print('댓글 달기 시작 1')
+        if l_ea_time > 0:
+            print('누락 사진이 1개 이상')
+            aah = ''
+
+            for ml in ea_time:
+                aah = aah + str(ml) +'시 '
+
+            neyong = 'test:' + str(l_ea_time) + '개의 사진 누락' + '(' + aah + '/' + "신고도구에서 다운로드 받은 PNG 파일, 우하단 워터마크 정상 표시, 정시 전후 10분 이내 사진만 인정)"
+            print(neyong)
+            driver.find_element_by_id("textDiv").send_keys(neyong)
+            time.sleep(3)
+            btb = driver.find_elements_by_class_name("submitBtn")[0]
+            btb.click()
+
+            try:
+                # 얼러트 종료
+                time.sleep(2)
+                alert = driver.switch_to.alert
+                alert.accept()
+                time.sleep(2)
+            except:
+                pass
+        else:
+            pass
+    else:
         pass
 
 
