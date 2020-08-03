@@ -55,6 +55,9 @@ try:
 except:
     pass
 
+handles = driver.window_handles
+b_window = driver.window_handles[0]
+
 #아이디 입력
 id = driver.find_element_by_name("id")
 id.send_keys("아이디")
@@ -66,17 +69,28 @@ pw.send_keys("패스워드")
 #로그인 버튼 클릭
 driver.find_element_by_class_name("log_btn").click()
 
-#우측 상단 이름 클릭
-driver.find_element_by_class_name("divi_txt").click()
-
 #5초 대기
 delay = 5
 driver.implicitly_wait(delay)
 
-#창 번호 찾기
-handles = driver.window_handles
-#0번 창(메인윈도우) 이름 설정
-b_window = driver.window_handles[0]
+try:
+    # 창 번호 찾기
+    handles = driver.window_handles
+    # 0번 창(메인윈도우) 이름 설정
+    a_window = driver.window_handles[1]
+    c_window = driver.window_handles[2]
+    b_window = driver.window_handles[0]
+
+    # 두 번째 창으로 스위치
+    driver.switch_to.window(a_window)
+    driver.close()
+
+    # 두 번째 창으로 스위치
+    driver.switch_to.window(c_window)
+    driver.close()
+except:
+    pass
+
 
 #재택근로자 이름 및 근무조, 근무요일
 jetek_info = {
@@ -112,6 +126,9 @@ jetek_info = {
 '임선정':['야간','월화수금일']
 }
 
+
+
+
 #테서렉트 경로 설정
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
@@ -143,13 +160,17 @@ def go_bogo():
     driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[1]/a[3]""").click()
     time.sleep(2)
 
-    #일클릭(1번줄4번째)
+    #일클릭(1번줄4번째, 7월1일 수요일)
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[4]/a""").click()
     #time.sleep(2)
 
-    #일클릭(3번줄3번째-14일)
-    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[4]/td[3]/a""").click()
+    #일클릭(1번줄7번째, 8월1일 토요일)
+    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[7]/a""").click()
     time.sleep(2)
+
+    #일클릭(3번줄3번째-14일)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[4]/td[3]/a""").click()
+    #time.sleep(2)
 
     # 일클릭
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[4]""").click()
@@ -207,6 +228,12 @@ def clickman():
                     time.sleep(1)
                     # 창 컨트롤 - 나중에 이 변수 쓸 것임
                     handles = driver.window_handles
+
+
+
+
+
+
                     #사진 관련 함수 실행
                     count_pic()
             except:
@@ -294,7 +321,10 @@ def imgcrop(fileid, filenm):
         print('사진인식오류-테서렉트 점검')
 
 
+
+
 def count_pic():
+    #이 함수에서 쓰던 변수를 global로 사용
     global b_window
     global a_window
     global numb
@@ -305,16 +335,14 @@ def count_pic():
     b_window = driver.window_handles[0]
     a_window = driver.window_handles[1]
 
+
     #두 번째 창으로 스위치
     driver.switch_to.window(a_window)
 
     #현재 URL - cu
     cu = driver.current_url
-
+    #URL 출력
     print(cu)
-
-
-
 
     #제목 추출
     title = driver.find_element_by_xpath("""/html/body/div[2]/div[3]/div[3]/table/tbody/tr[2]/td""").text
@@ -413,16 +441,20 @@ def count_pic():
                 #초 6:8
                 olta_s = olta_pic[6:8]
 
-
+                #시 분 초 출력
                 print(olta_h, olta_m, olta_s)
-
-                if int(olta_m) > 50:
-
+                #50분이 넘어가는 사진 분기
+                if int(olta_m) > 49:
+                    #50분이 넘어가며 23시인 사진 분기
                     if int(olta_h) == 23:
+                        #00시로 변경
                         olta_h = '00'
 
+
                     else:
+                        #50분이 넘어가며 23시가 아닌 경우
                         olta_h = int(olta_h) + 1
+
 
                     try:
                         ea_time.remove(int(olta_h))
@@ -430,7 +462,7 @@ def count_pic():
                         pass
 
 
-                elif int(olta_m) < 10:
+                elif int(olta_m) < 11:
                     print(olta_h,'시')
 
                     try:
@@ -463,44 +495,57 @@ def count_pic():
     print(ea_time)
     l_ea_time = len(ea_time)
 
-    if int(l_ea_time) == 0:
-        ea_time = ''
-    else:
-        print(ea_time, l_ea_time,'이거')
-        pass
+    det = 'Y'
 
-    cmts = driver.find_elements_by_name("commentDiv")
-    l_cmts = len(cmts) - 1
-    print('댓글 개수:', l_cmts)
+    if det == 'Y':
 
-    if l_cmts == 0:
-        print('댓글 달기 시작 1')
-        if l_ea_time > 0:
-            print('누락 사진이 1개 이상')
-            aah = ''
+        #det(댓글) 달기 실행
+        if int(l_ea_time) == 0:
+            ea_time = ''
+        else:
+            print(ea_time, l_ea_time, '이거')
+            pass
 
-            for ml in ea_time:
-                aah = aah + str(ml) +'시 '
+        cmts = driver.find_elements_by_name("commentDiv")
+        l_cmts = len(cmts) - 1
+        print('댓글 개수:', l_cmts)
 
-            neyong = 'test:' + str(l_ea_time) + '개의 사진 누락' + '(' + aah + '/' + "신고도구에서 다운로드 받은 PNG 파일, 우하단 워터마크 정상 표시, 정시 전후 10분 이내 사진만 인정)"
-            print(neyong)
-            driver.find_element_by_id("textDiv").send_keys(neyong)
-            time.sleep(3)
-            btb = driver.find_elements_by_class_name("submitBtn")[0]
-            btb.click()
+        if l_cmts == 0:
+            print('댓글 달기 시작 1')
+            if l_ea_time > 0:
+                print('누락 사진이 1개 이상')
+                aah = ''
 
-            try:
-                # 얼러트 종료
-                time.sleep(2)
-                alert = driver.switch_to.alert
-                alert.accept()
-                time.sleep(2)
-            except:
+                for ml in ea_time:
+                    aah = aah + str(ml) + '시 '
+
+                neyong = str(
+                    l_ea_time) + '개의 사진 누락' + '(' + aah + '/' + "인정범위 : 1. 신고도구에서 다운로드 받은 PNG 파일, 2. 우하단 워터마크 정상 표시, 3. 정시 전후 10분 이내 사진)"
+                print(neyong)
+                driver.find_element_by_id("textDiv").send_keys(neyong)
+                time.sleep(3)
+                btb = driver.find_elements_by_class_name("submitBtn")[0]
+                btb.click()
+
+                try:
+                    # 얼러트 종료
+                    time.sleep(2)
+                    alert = driver.switch_to.alert
+                    alert.accept()
+                    time.sleep(2)
+                except:
+                    pass
+            else:
                 pass
         else:
             pass
+
     else:
+        print('댓글X')
         pass
+
+
+
 
 
     ln = str(ln)
