@@ -60,11 +60,11 @@ b_window = driver.window_handles[0]
 
 #아이디 입력
 id = driver.find_element_by_name("id")
-id.send_keys("아이디")
+id.send_keys("sujiham")
 
 #패스워드 입력
 pw = driver.find_element_by_id("userPw")
-pw.send_keys("패스워드")
+pw.send_keys("1q2w3e4r!")
 
 #로그인 버튼 클릭
 driver.find_element_by_class_name("log_btn").click()
@@ -77,6 +77,7 @@ try:
     # 창 번호 찾기
     handles = driver.window_handles
     # 0번 창(메인윈도우) 이름 설정
+    b_window = driver.window_handles[0]
     a_window = driver.window_handles[1]
     c_window = driver.window_handles[2]
     b_window = driver.window_handles[0]
@@ -123,7 +124,11 @@ jetek_info = {
 '이상훈':['심야','월화수목일'],
 '마하문':['야간','월화수목일'],
 '김영호':['심야','월화수목토'],
-'임선정':['야간','월화수금일']
+'임선정':['야간','월화수금일'],
+'배재은':['주간','월화수목금'],
+'이신덕':['주간','화수목금토'],
+'이은영':['심야','화수목금토'],
+'이현욱':['주간','월화수목금'],
 }
 
 
@@ -165,7 +170,11 @@ def go_bogo():
     #time.sleep(2)
 
     #일클릭(1번줄7번째, 8월1일 토요일)
-    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[7]/a""").click()
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[7]/a""").click()
+    #time.sleep(2)
+
+    #일클릭(1번줄7번째, 8월6일 토요일)
+    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[3]/td[5]/a""").click()
     time.sleep(2)
 
     #일클릭(3번줄3번째-14일)
@@ -188,8 +197,20 @@ def go_bogo():
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[1]/a[2]/span""").click()
     #time.sleep(2)
 
-    # 우측달력일클릭
-    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[4]/td[3]/a""").click()
+    # 달넘기기(좌로)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[1]/a[2]/span""").click()
+    #time.sleep(2)
+
+    # 우측달력일클릭(7.31)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[6]/td[6]/a""").click()
+    #time.sleep(1)
+
+    # 우측달력일클릭(7.10)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[3]/td[6]/a""").click()
+    #time.sleep(1)
+
+    # 우측달력일클릭(7.1)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[2]/td[4]/a""").click()
     #time.sleep(1)
 
     # 확인
@@ -204,7 +225,7 @@ def go_bogo():
 def clickman():
     try:
         #페이지 (최대 10페이지 한정)
-        for ia in range(1,10):
+        for ia in range(1,11):
 
             #메인화면 포커스
             driver.switch_to.window(b_window)
@@ -429,11 +450,13 @@ def count_pic():
             #imgcrop 함수 종료 - tess변수 리턴
 
             #tess 중 왼쪽에서 4글자 비교 (2020과)
+            #공백이 없다는 가정 필요
             if tess[0:4] == '2020':
                 #왼쪽에서 10번째까지가 날짜
-                nalza = tess[0:10]
+                tess_space = tess.replace(" ","")
+                nalza = tess_space[0:10]
                 #11번째부터 19번째까지가 시간
-                olta_pic = tess[11:19]
+                olta_pic = tess_space[10:18]
                 #시간 0:2
                 olta_h = olta_pic[0:2]
                 #분 3:5
@@ -450,17 +473,14 @@ def count_pic():
                         #00시로 변경
                         olta_h = '00'
 
-
                     else:
                         #50분이 넘어가며 23시가 아닌 경우
                         olta_h = int(olta_h) + 1
-
 
                     try:
                         ea_time.remove(int(olta_h))
                     except:
                         pass
-
 
                 elif int(olta_m) < 11:
                     print(olta_h,'시')
@@ -473,7 +493,6 @@ def count_pic():
                 else:
                     print('해당안됨')
 
-
                 olta_pic_s.append(olta_pic)
                 nalza_s.append(nalza)
 
@@ -483,12 +502,12 @@ def count_pic():
                 filetime.append(tess)
 
             else:
-                pic_er.append('에러')
-                print('er')
+
+                print('사진인식에러')
                 pass
 
         else:
-            print('아니')
+            print('PNG파일아님')
             pass
 
 
@@ -571,6 +590,7 @@ def count_pic():
     driver.close()
 
     wb.save(filename=file_name)
+
 
 go_bogo()
 
