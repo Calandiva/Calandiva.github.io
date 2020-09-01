@@ -134,6 +134,7 @@ jetek_info = {
 
 
 
+
 #테서렉트 경로 설정
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
@@ -162,20 +163,20 @@ def go_bogo():
     #time.sleep(2)
 
     #달넘기기(오른쪽)
-    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[1]/a[3]""").click()
-    time.sleep(2)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[1]/a[3]""").click()
+    #time.sleep(2)
 
     #일클릭(1번줄4번째, 7월1일 수요일)
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[4]/a""").click()
     #time.sleep(2)
 
     #일클릭(1번줄7번째, 8월1일 토요일)
-    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[7]/a""").click()
-    #time.sleep(2)
+    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[2]/td[7]/a""").click()
+    time.sleep(2)
 
     #일클릭(1번줄7번째, 8월6일 토요일)
-    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[3]/td[5]/a""").click()
-    time.sleep(2)
+    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[3]/td[5]/a""").click()
+    #time.sleep(2)
 
     #일클릭(3번줄3번째-14일)
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[1]/div/div[2]/table/tr[4]/td[3]/a""").click()
@@ -190,20 +191,20 @@ def go_bogo():
     time.sleep(2)
 
     # 종료달력
-    #driver.find_element_by_xpath("""/html/body/div[1]/div[3]/dl/dd[1]/div/div/div[3]/input[2]""").click()
-    #time.sleep(2)
+    driver.find_element_by_xpath("""/html/body/div[1]/div[3]/dl/dd[1]/div/div/div[3]/input[2]""").click()
+    time.sleep(2)
 
     # 달넘기기
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[1]/a[2]/span""").click()
     #time.sleep(2)
 
     # 달넘기기(좌로)
-    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[1]/a[2]/span""").click()
-    #time.sleep(2)
+    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[1]/a[2]/span""").click()
+    time.sleep(2)
 
-    # 우측달력일클릭(7.31)
-    #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[6]/td[6]/a""").click()
-    #time.sleep(1)
+    # 우측달력일클릭(8.31)
+    driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[7]/td[2]/a""").click()
+    time.sleep(1)
 
     # 우측달력일클릭(7.10)
     #driver.find_element_by_xpath("""/html/body/div[4]/div/div/div[2]/div/div[2]/table/tr[3]/td[6]/a""").click()
@@ -214,8 +215,8 @@ def go_bogo():
     #time.sleep(1)
 
     # 확인
-    #driver.find_element_by_class_name("botBtn").click()
-    #time.sleep(2)
+    driver.find_element_by_class_name("botBtn").click()
+    time.sleep(2)
 
     # 검색버튼 클릭
     driver.find_element_by_class_name("submit").click()
@@ -250,17 +251,20 @@ def clickman():
                     # 창 컨트롤 - 나중에 이 변수 쓸 것임
                     handles = driver.window_handles
 
-
-
-
-
-
                     #사진 관련 함수 실행
                     count_pic()
+
+                    if i == 20 and ia == 10:
+                        driver.find_element_by_xpath("""/html/body/div[1]/div[4]/div[2]/div[2]/div[1]/span[3]/a""").click()
+                    else:
+                        pass
+
             except:
                 pass
     except:
         pass
+
+
 
 def imgcrop(fileid, filenm):
     #변수 tess를 글로벌로
@@ -514,7 +518,7 @@ def count_pic():
     print(ea_time)
     l_ea_time = len(ea_time)
 
-    det = 'Y'
+    det = 'N'
 
     if det == 'Y':
 
