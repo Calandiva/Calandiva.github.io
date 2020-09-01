@@ -133,7 +133,7 @@ try:
 except:
     pass
 
-#재택근로자 이름 및 근무조, 근무요일
+#재택근로자 이름 및 근무조, 근무요일, 띄어쓰기 없이 작성
 jetek_info = {
 '김동수':['야간','월화수목일'],
 '김지원':['심야','월화수목일'],
@@ -416,8 +416,8 @@ def count_pic():
     title = driver.find_element_by_xpath("""/html/body/div[2]/div[3]/div[3]/table/tbody/tr[2]/td""").text
     #날짜 추출
     date = driver.find_element_by_xpath("""/html/body/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[2]""").text
-    #보낸사람 추출
-    repo = driver.find_element_by_id("repo_emp").text
+    #보낸사람 추출 - 띄어쓰기 삭제
+    repo = driver.find_element_by_id("repo_emp").text.replace(" ","")
     #보고사항 추출
     bogosh = driver.find_element_by_xpath("""/html/body/div[2]/div[3]/div[3]/table/tbody/tr[3]/td""").text
     #특이사항 추출
