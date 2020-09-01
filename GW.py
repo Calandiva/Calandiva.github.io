@@ -60,11 +60,11 @@ b_window = driver.window_handles[0]
 
 #아이디 입력
 id = driver.find_element_by_name("id")
-id.send_keys("sujiham")
+id.send_keys("계정")
 
 #패스워드 입력
 pw = driver.find_element_by_id("userPw")
-pw.send_keys("1q2w3e4r!")
+pw.send_keys("비번")
 
 #로그인 버튼 클릭
 driver.find_element_by_class_name("log_btn").click()
