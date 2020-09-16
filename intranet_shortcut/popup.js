@@ -1,4 +1,9 @@
 //이미지
+
+var piccounter = 0;
+var picsize = 1100;
+
+
 function openwindow(opage, x, y) {
 farwindow = window.open('','Links','width='+x+', height='+y+', toolbar=0, scrollbars=0, resizable=no');
 if (farwindow != null) {
@@ -38,13 +43,14 @@ var total_url = {
 '파일이즈':'http://fileis.com/contents/view.htm?idx=',
 '파일혼':'https://filehon.com/contents/view.php?idx=',
 '파일구리(웹하드)':'http://disk.fileguri.com/pop.php?sm=bbs_info&idx=',
-'애플파일':'http://applefile.com/contents/board_view.php?idx=',
-'파일조':'http://www.filejo.com/main/popup/bbs_info.php?idx=',
+'애플파일':'https://www.applefile.com/contents/view.html?idx=',
+'파일조':'https://www.filejo.com/main/popup/bbs_info.php?idx=',
 '파일함':'http://fileham.com/main/popup.php?doc=bbsInfo&idx=',
 '메가파일':'http://www.megafile.co.kr/webhard/view.php?WriteNum=',
 '파일투어':'http://www.filetour.com/front/contents/',
 '피디팝':'http://bbs.pdpop.com/board_re.php?mode=view&code=',
-'파일런':'https://filerun.co.kr/contents/view.htm?idx='
+'파일런':'https://filerun.co.kr/contents/view.htm?idx=',
+'파일캐스트':'https://filecast.co.kr/www/contents/#!/<숫자>/<숫자>/<숫자>/view/게시물번호'
 };
 
 
@@ -125,6 +131,64 @@ document.checkInsForm();
 
 
 
+function over_imgright() {
+var img_ov = document.getElementsByClassName('addedFile');
+var mo = document.createEvent("MouseEvent");
+mo.initMouseEvent("mouseover", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+img_ov[piccounter].style.border = "0px solid #F40808";
+
+var con = img_ov.length-1;
+
+if (con == piccounter){
+	
+	piccounter = 0
+    img_ov[piccounter].dispatchEvent(mo);
+    img_ov[piccounter].style.border = "2px solid #F40808";
+    picV();
+
+}
+else {
+	piccounter = piccounter+1;
+    img_ov[piccounter].dispatchEvent(mo);
+    img_ov[piccounter].style.border = "2px solid #F40808";
+    picV();
+}
+
+}
+
+
+function over_imgleft() {
+var img_ov = document.getElementsByClassName('addedFile');
+var mo = document.createEvent("MouseEvent");
+mo.initMouseEvent("mouseover", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+img_ov[piccounter].style.border = "0px solid #F40808";
+
+var con = img_ov.length-1;
+
+if (0 == piccounter){
+
+	piccounter = con;
+    img_ov[piccounter].dispatchEvent(mo);
+    img_ov[piccounter].style.border = "2px solid #F40808";
+    picV();
+
+}
+else {
+	piccounter = piccounter-1;
+    img_ov[piccounter].dispatchEvent(mo);
+    img_ov[piccounter].style.border = "2px solid #F40808";
+    picV();
+}
+
+
+img_ov[piccounter].dispatchEvent(mo);
+img_ov[piccounter].style.border = "2px solid #F40808";
+
+picV();
+}
+
 
 
 
@@ -135,12 +199,42 @@ var img1_ad = document.getElementByClassName('addedFile').getAttribute('svrfile'
 var img1 = '/file/opupload/'+img1_ad+'.jpg'
 }
 
+
+
 function picV() {
 var picWth_pre = document.getElementById('imagePreviewArea');
-picWth_pre.style.width = '1000px';
+picWth_pre.style.width = '1100px';
 var picWth = picWth_pre.getElementsByClassName('imgArea')[0];
+
 picWth.style.size = "2000px";
-picWth.style.width = "1000px";
+picWth.style.width = picsize+"px";
+}
+
+
+
+function picV_up() {
+var picWth_pre = document.getElementById('imagePreviewArea');
+
+var picWth = picWth_pre.getElementsByClassName('imgArea')[0];
+
+picsize = picsize + 500;
+var resolb = picsize + "px";
+picWth.style.width = resolb
+
+
+
+}
+
+function picV_down() {
+var picWth_pre = document.getElementById('imagePreviewArea');
+
+var picWth = picWth_pre.getElementsByClassName('imgArea')[0];
+
+
+picsize = picsize - 500;
+var resolb = picsize + "px";
+picWth.style.width = resolb
+
 }
 
 
@@ -294,6 +388,7 @@ var result = result.slice(and+2,20);
 var final_result = result - result;
 }
 
+
 else if(webhard == '메가파일') {
 var result = result.replace('&fv=','');
 var final_result = result - result;
@@ -418,6 +513,33 @@ shortcut.add('',function()
 {'disable_in_input': true,
 'keycode': 54});
 
+
+shortcut.add('',function()
+{over_imgright();
+},
+{'disable_in_input': true,
+'keycode': 39});
+
+
+shortcut.add('',function()
+{over_imgleft();
+},
+{'disable_in_input': true,
+'keycode': 37});
+
+
+shortcut.add('',function()
+{picV_up();
+},
+{'disable_in_input': true,
+'keycode': 38});
+
+
+shortcut.add('',function()
+{picV_down();
+},
+{'disable_in_input': true,
+'keycode': 40});
 
 
 
