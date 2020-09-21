@@ -1,6 +1,7 @@
 //이미지
 
 var piccounter = 0;
+var trcountter = 0;
 var picsize = 1100;
 
 
@@ -154,22 +155,46 @@ img_ov[piccounter].style.border = "0px solid #F40808";
 
 var con = img_ov.length-1;
 
+
 if (con == piccounter){
 	
 	piccounter = 0
     img_ov[piccounter].dispatchEvent(mo);
     img_ov[piccounter].style.border = "2px solid #F40808";
     picV();
-
+	
+	var picsTr = img_ov[piccounter]
+	var pTr = picsTr.getAttribute('id')
+	
 }
+
 else {
 	piccounter = piccounter+1;
     img_ov[piccounter].dispatchEvent(mo);
     img_ov[piccounter].style.border = "2px solid #F40808";
     picV();
-}
+	
+	var picsTr = img_ov[piccounter]
+	var pTr = picsTr.getAttribute('id')
+	
+	
+if (null == pTr){
+	var picsTr = img_ov[piccounter-1]
+	var pTr = picsTr.getAttribute('id')
+	if (null == pTr){
+		var picsTr = img_ov[piccounter-2]
+	    var pTr = picsTr.getAttribute('id')
+	}
+};
+
+picsNum = pTr.replace('addedFile_','');
+
+picsId = document.getElementById("onlSttmId_"+picsNum)
 
 }
+}
+
+
 
 
 function over_imgleft() {
@@ -187,22 +212,40 @@ if (0 == piccounter){
     img_ov[piccounter].dispatchEvent(mo);
     img_ov[piccounter].style.border = "2px solid #F40808";
     picV();
-
+	
+	var picsTr = img_ov[piccounter]
+	var pTr = picsTr.getAttribute('id')
 }
+
 else {
 	piccounter = piccounter-1;
     img_ov[piccounter].dispatchEvent(mo);
     img_ov[piccounter].style.border = "2px solid #F40808";
     picV();
+	
+	var picsTr = img_ov[piccounter]
+	var pTr = picsTr.getAttribute('id')
+}
+
+if (null == pTr){
+	var picsTr = img_ov[piccounter-1]
+	var pTr = picsTr.getAttribute('id')
+	if (null == pTr){
+		var picsTr = img_ov[piccounter-2]
+	    var pTr = picsTr.getAttribute('id')
+	}
+};
+
+
+
 }
 
 
-img_ov[piccounter].dispatchEvent(mo);
-img_ov[piccounter].style.border = "2px solid #F40808";
+function each_check() {
 
-picV();
+picsId.click();
+
 }
-
 
 
 
@@ -624,8 +667,15 @@ shortcut.add('z',function()
 });
 
 
-shortcut.add('x',function()
+shortcut.add('c',function()
 {some_singo();
+},
+{'disable_in_input': true
+});
+
+
+shortcut.add('x',function()
+{each_check();
 },
 {'disable_in_input': true
 });
