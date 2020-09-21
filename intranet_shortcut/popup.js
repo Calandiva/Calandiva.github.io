@@ -93,8 +93,21 @@ document.getElementById('insbtn').click();
 }
 
 
-function some_singo() {
+function some_singo1() {
 document.getElementsByClassName('choicenotify')[0].click(); //선택 신고접수
+
+}
+
+
+function some_singo2() {
+document.getElementById('cp020010').click(); //선택 신고접수
+
+}
+
+
+function some_singo3() {
+
+document.getElementsByName('transFormCd')[0].click();
 }
 
 
@@ -135,6 +148,13 @@ document.getElementsByName('all')[0].click();
 
 function iheng_click() {
 document.getElementsByName('ynall')[0].click();
+
+};
+
+
+
+function direct() {
+
 
 };
 
@@ -667,8 +687,23 @@ shortcut.add('z',function()
 });
 
 
+var c_counter = 0
+
 shortcut.add('c',function()
-{some_singo();
+{
+if (c_counter == 0){
+	some_singo1();
+	c_counter = 1
+}
+else if (c_counter == 1){
+	some_singo2();
+	c_counter = 2
+}
+else if (c_counter == 2){
+	some_singo3();
+	c_counter = 0
+}
+	
 },
 {'disable_in_input': true
 });
@@ -679,7 +714,6 @@ shortcut.add('x',function()
 },
 {'disable_in_input': true
 });
-
 
 
 
