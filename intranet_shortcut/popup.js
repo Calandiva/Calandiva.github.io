@@ -91,6 +91,12 @@ document.getElementById('insbtn').scrollIntoView(); //제.반버튼누르기
 document.getElementById('insbtn').click();
 }
 
+
+function some_singo() {
+document.getElementsByClassName('choicenotify')[0].click(); //선택 신고접수
+}
+
+
 function go_one() {
 var aa = document.getElementById('ospName_1').click(); //1번 글 들어가기
 }
@@ -114,6 +120,14 @@ document.getElementsByName('etc')[0].value = '게시물 삭제되어 반려(제�
 
 
 }
+
+
+
+
+function all_check() {
+document.getElementsByName('all')[0].click();
+}
+
 
 
 
@@ -597,6 +611,21 @@ shortcut.add('I',function()
 
 shortcut.add('o',function()
 {ihengGo();
+},
+{'disable_in_input': true
+});
+
+
+
+shortcut.add('z',function()
+{all_check();
+},
+{'disable_in_input': true
+});
+
+
+shortcut.add('x',function()
+{some_singo();
 },
 {'disable_in_input': true
 });
