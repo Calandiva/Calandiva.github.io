@@ -53,7 +53,7 @@ pip install numpy
 
 # ID, PW 정보 작성
 userId = "hije"
-userPw = "1q2w3e4r!"
+userPw = "pwpwpw"
 
 # 댓글작성여부 Y or Anykey
 det = 'Y'
